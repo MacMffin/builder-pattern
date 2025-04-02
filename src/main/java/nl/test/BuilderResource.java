@@ -5,32 +5,51 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import nl.test.builders.FerrariBuilder;
-import nl.test.builders.RenaultBuilder;
-import nl.test.director.CarDirector;
-import nl.test.interfaces.Car;
-import nl.test.interfaces.CarBuilder;
-import nl.test.model.PriceRange;
+import nl.test.builders.ComputerBuilder;
+import nl.test.builders.ComputerManualBuilder;
+import nl.test.director.ComputerDirector;
+import nl.test.model.Computer;
+import nl.test.model.ComputerManual;
 
 @Path("/build")
 public class BuilderResource {
 
     @Inject
-    CarDirector carDirector;
+    ComputerDirector computerDirector;
 
-    @Path("ferrari")
+    @Path("computer/highend")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Car buildFerrari() {
-        CarBuilder builder = new FerrariBuilder();
-        return carDirector.makeCar(builder, PriceRange.EXPENSIVE);
+    public Computer buildHighEndComputer() {
+        ComputerBuilder builder = new ComputerBuilder();
+        computerDirector.makeHighEndComputer(builder);
+        return builder.getResult();
     }
 
-    @Path("renault")
+    @Path("manual/highend")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Car buildRenault() {
-        CarBuilder builder = new RenaultBuilder();
-        return carDirector.makeCar(builder, PriceRange.EXPENSIVE);
+    public ComputerManual buildHighEndComputerManual() {
+        ComputerManualBuilder builder = new ComputerManualBuilder();
+        computerDirector.makeHighEndComputer(builder);
+        return builder.getResult();
+    }
+
+    @Path("computer/lowbudget")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Computer buildLowBudgetComputer() {
+        ComputerBuilder builder = new ComputerBuilder();
+        computerDirector.makeLowBudgetComputer(builder);
+        return builder.getResult();
+    }
+
+    @Path("manual/lowbudget")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public ComputerManual buildLowBudgetComputerManual() {
+        ComputerManualBuilder builder = new ComputerManualBuilder();
+        computerDirector.makeLowBudgetComputer(builder);
+        return builder.getResult();
     }
 }
